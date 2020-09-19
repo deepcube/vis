@@ -1098,6 +1098,16 @@ function M.load(name, alt_name, cache)
         add_style(lexer, token, style)
       end
     end
+    add_rule(
+      lexer,
+      'newline',
+      M.token(M.WHITESPACE, lpeg_S('\n'))
+    )
+    add_rule(
+      lexer,
+      'trailing_whitespace',
+      M.token(M.ERROR, lpeg_S(' \t')^1 * #lpeg_S('\n'))
+    )
     for i = 1, #lexer._rules do
       add_rule(lexer, lexer._rules[i][1], lexer._rules[i][2])
     end
